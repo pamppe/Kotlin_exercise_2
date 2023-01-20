@@ -4,8 +4,7 @@ import kotlin.random.Random
 
 // Exercise 2
 
-// Name: Emil Lehtonen
-// Student id: 2201349
+
 
     /*
 Write implementations of the functions into a Kotlin file. You may find
