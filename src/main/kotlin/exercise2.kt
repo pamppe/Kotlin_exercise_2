@@ -61,9 +61,8 @@ Example runs:
 println(numDistinct(listOf(1,1,1,2,3,4,5,6,6,6))) // 6
 println(numDistinct(pickNDistinct(1,40,7))) // 7
 */
-fun numDistinct(list: List<Int>){
-
-
+fun numDistinct(list: List<Int>): Int{
+    return list.toSet().size
 }
 
 
@@ -80,6 +79,14 @@ println(numCommon(listOf(1,2,3,4), listOf(2,4))) // 2
 println(numCommon(listOf(1, 1, 1, 2, 3), listOf(1, 2))) // 2
 println(numCommon(listOf(4, 3, 2), listOf(1, 4, 1, 1, 2, 3))) // 3
 */
+fun numCommon(list1: List<Int>, list2: List<Int>): Int {
+    val set1 = list1.toSet()
+    val set2 = list2.toSet()
+    return set1.intersect(set2).size
+}
+
+
+
 
     /*
 Write function readNDistinct(low: Int, high: Int, n: Int): List<Int> that reads from console a line
@@ -87,6 +94,27 @@ that contains n distinct integer numbers ranging from low and high (inclusive), 
 You may assume low <= high and n <= number of distinct values.
 Hints: use readLine(), .split(), check .toIntOrNull(), .filterNotNull() and .all { ... }
 */
+fun readNDistinct(low: Int = 1, high: Int = 40, n: Int): List<Int> {
+        val range = low..high
+        while (true) {
+            val input = readlnOrNull()
+            if (input != null) {
+                val numbers = input.split(",").mapNotNull { it.trim().toIntOrNull() }
+                if (numbers.size == n && numbers.all { it in range }) {
+                    return numbers.distinct().sorted()
+                }else {
+                    println("Need numbers...")
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+
 
     /*
 Write function playLotto() that
@@ -111,6 +139,23 @@ lotto numbers: [3, 6, 10, 12, 20, 36, 40], you got 1 correct
 computer guess in 43 steps is [3, 6, 10, 12, 20, 36, 40]
 More? (Y/N): N
 */
+    fun playLotto(){
+        println("Give numbers separated by commas: ")
+        val secretNumbers = pickNDistinct(1, 40, 7)
+        do{
+            val guess = readNDistinct(1, 40, 7)
+            val correctGuesses = numCommon(secretNumbers, guess)
+            println("Lotto numbers: $secretNumbers, You guessed $correctGuesses numbers correctly!")
+            println("More? (y/n)")
+            val  playAgain = readLine()
+            if (playAgain != "y") break
+
+        } while (true)
+
+    }
+
+
+
 
 
 
@@ -138,7 +183,7 @@ fun lottoResult(guess: List<Int>, lotto: List<Int>) =
     }
 */
     fun main() {
-        println("kukkuu")
-        println(pickNumber(0,40))
-        println(pickNDistinct(0,40,10))
+        playLotto()
+
+
     }
